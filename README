@@ -1,1 +1,14 @@
 Various scripts that, while useful, don't deserve a project of their own.
+
+blcheck.sh:
+    A script, started from a forum post
+    (http://www.daemonforums.org/showthread.php?t=302), to check an IP on
+    a number of blacklists.  It's not the most clever bit of code, but it
+    works.  I modified it to make the output more appropriate for cron: it
+    doesn't have any when things are ok.  It also has an exit code that
+    indicates how many blacklists you got a hit on.
+
+    I'm running it from cron as:
+    blcheck.sh $( ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | awk -F: '{print $2}' )
+    which isn't the best commandline either, but it's not bad.  If I had
+    puppet on here I'd probably use facter to get the IP.
