@@ -8,6 +8,8 @@
 # 3) If servermappings.txt is checked in, db.backstopsolutions serial number
 #    needs to increment
 # 4) CNAMEs should either be to local names (no periods) or end in a .
+# 5) Use named-checkzone, maybe?  It knows a lot about what a zone file
+#    should look like, though we need to derive the zone name somehow
 #
 # Some of that is pretty specific to my site, but may be useful to someone else
 
