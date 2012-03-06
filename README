@@ -12,3 +12,19 @@ blcheck.sh:
     blcheck.sh $( ifconfig eth0 | grep 'inet addr' | awk '{print $2}' | awk -F: '{print $2}' )
     which isn't the best commandline either, but it's not bad.  If I had
     puppet on here I'd probably use facter to get the IP.
+
+named-svn-pre-commit.pl:
+    A Subversion pre-commit hook for my named config.  Parts of it will be 
+    pretty site-specific, but I imagine parts would be useful to someone
+    else.  Assumptions:
+    * Your zones are in files called db.(zone name)
+    * You don't have any comments that look suspiciously like my serial
+      number line
+    * Your serial number line looks like:
+      (whitespace)YYYYMMDDNN(whitespace); Serial
+      The current code probably works if you've got any number in there,
+      but I make no guarantee of future working
+
+    I was pretty tired of people checking in zones without updating the
+    serial and the associated sadness that comes from it, so I wrote a
+    pre-commit hook.  Totally bad effort per pain, but what the heck.
