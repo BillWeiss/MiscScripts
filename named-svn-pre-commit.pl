@@ -48,7 +48,7 @@ my @changedfiles = `$svnlook changed -t "$txn" "$repo"`;
 
 # stupid svnlook diff puts extra crud in the diff.  Do it the hard way!
 # I'm especially proud of having to shell out to bash -c since `` uses sh
-# which doesn't have my <( ) I need
+# which doesn't have the <( ) I need
 foreach my $file ( @changedfiles ) {
     my $diff = `/bin/bash -c '/usr/bin/diff -u <( $svnlook cat "$repo" "$file" ) <( $svnlook cat -t "$txn" "$repo" "$file" )'`;
 
