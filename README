@@ -28,3 +28,16 @@ named-svn-pre-commit.pl:
     I was pretty tired of people checking in zones without updating the
     serial and the associated sadness that comes from it, so I wrote a
     pre-commit hook.  Totally bad effort per pain, but what the heck.
+
+ssl-cert-pre-commit.sh:
+    A Subversion pre-commit hook to make sure that an SSL key and cert
+    match up.  We have a few places in Puppet we keep SSL key/cert pairs,
+    and they're automatically deployed to servers.  If they don't line up
+    (for instance, someone gets a new cert but doesn't copy the new key
+    in) Apache will blow up when restarted.  Don't allow that.
+
+    Assumptions:
+    * Files are named (whatever).key and (whatever).crt
+    * They're in PEM format (though openssl may auto-detect the right
+      format for you, I haven't tested that)
+
