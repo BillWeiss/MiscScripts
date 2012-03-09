@@ -11,8 +11,15 @@ export HOME=/
 SVNLOOK=/usr/bin/svnlook
 FAILCOUNT=0
 
-while read -r keyfile ; do
-        certfile=$( echo "$keyfile" | sed 's/\.key$/.crt/' )
+# get list of changed certs/keys
+CHANGES=$( $SVNLOOK changed -t "$TXN" "$REPO" | awk '/^[^D].*\.(key|crt)$/ {print $2}' )
+# if a key and cert ended up changing, filter the duplicate out
+CHANGES=$( echo "$CHANGES" | sed 's/\.\(key\|crt\)$//' | sort | uniq )
+
+if [ -n "$CHANGES" ] ; then
+    while read -r filebasename ; do
+        keyfile="${filebasename}.key"
+        certfile="${filebasename}.crt"
 
         # I don't know a good way to see if a file exists in a repo from here
         # so just try to "svnlook cat" it.  If that blows up, I guess it 
@@ -25,10 +32,11 @@ while read -r keyfile ; do
              <( openssl rsa -noout -modulus -in "${tmpkey}" ) >/dev/null
 
         if [ $? -ne 0 ] ; then
-                echo "$keyfile and $certfile don't match up" >&2
-                FAILCOUNT=$(( $FAILCOUNT + 1 ))
+            echo "$keyfile and $certfile don't match up" >&2
+            FAILCOUNT=$(( $FAILCOUNT + 1 ))
         fi
-done < <( $SVNLOOK changed -t "$TXN" "$REPO" | awk '/^[^D].*\.(key|crt)$/ {print $2}' )
+    done < <( echo "$CHANGES" )
+fi
 
 rm ${tmpkey}
 rm ${tmpcert}
