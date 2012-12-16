@@ -51,3 +51,17 @@ check_activemq.pl:
     http://exchange.nagios.org/directory/Tutorials/Other-Tutorials-And-HOWTOs/ActiveMQ-Monitoring-Scripts-For-Nagios/details
     , but cleaned up quite a bit for our use.
 
+check_ns_sanity.sh:
+    I had a bad experience.  Namely, my nameservers lost their minds and
+    stopped serving up my zones.  Not all of them, just enough to cause
+    customers to call in and say they couldn't see the site sporadically.
+    While we're fixing that, it's the sort of thing that should be
+    monitored.
+
+    I might add some additional checking to look for a specific record,
+    but right now I'm just concerned with "is anything there", which is
+    checked by asking for a SOA.  Comparing serial numbers might be
+    clever, though it would alert any time we check during a cache refresh
+    (i.e. when we've made a change but not every slave has yet fetched
+    it).  Eh.
+
