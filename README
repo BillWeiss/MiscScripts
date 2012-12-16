@@ -45,7 +45,10 @@ check_activemq.pl:
     A somewhat trivial Nagios check script for ActiveMQ.  Our use case is
     that we have a small number of queues that we want to monitor (not all
     the available queues), and we just want to know if they have more than
-    N unconsumed messages in them.  Easy!
+    N unconsumed messages in them.  Easy!  This relies on having access to
+    the web console of the activemq server and being able to grab the XML
+    formatted status page that lists all the queues.  Let me know if
+    there's a cleaner way to do this, I don't exactly like it.
 
     This is bodily borrowed from
     http://exchange.nagios.org/directory/Tutorials/Other-Tutorials-And-HOWTOs/ActiveMQ-Monitoring-Scripts-For-Nagios/details
