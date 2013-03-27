@@ -68,3 +68,9 @@ check_ns_sanity.sh:
     (i.e. when we've made a change but not every slave has yet fetched
     it).  Eh.
 
+check_ac.pl:
+    A work in progress to monitor a Liebert Challenger AC unit.  I can't
+    currently test against ours so it's not moving very much.
+
+    Taken from:
+    http://exchange.nagios.org/directory/Plugins/Hardware/Environmental/Liebert-Deluxe-System3-Air/details
