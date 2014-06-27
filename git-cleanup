@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git branch --merged | fgrep -v '* master' | while read branch ; do
+    git branch -d "${branch}" && git push origin ":${branch}"
+done
+
