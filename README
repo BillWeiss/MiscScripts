@@ -68,3 +68,11 @@ check_ns_sanity.sh:
     (i.e. when we've made a change but not every slave has yet fetched
     it).  Eh.
 
+git-cleanup:
+    My workflow for our company git projects is pretty simple:
+    Branch from master, do some stuff, PR it up, delete the branch once
+    it's accepted.  However, sometimes it takes a while to get those PRs
+    merged.  This script just walks through the branches (ignoring master)
+    and deletes them, both remotely and locally, if they're fully merged.
+
+    Is this useful for anyone else?  I don't know.
