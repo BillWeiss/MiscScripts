@@ -11,7 +11,6 @@ BLISTS="
     dnsbl.sorbs.net
     bl.spamcop.net
     zen.spamhaus.org
-    combined.njabl.org
 "
 
 # simple shell function to show an error message and exit
