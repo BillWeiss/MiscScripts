@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Taken originally from http://www.daemonforums.org/showthread.php?t=302
 # Modified to be more unixy (aka, not have output when things are ok)
 
@@ -19,7 +19,7 @@ BLISTS="
 # >&2  : redirect/send the message to stderr
 
 ERROR() {
-  echo $0 ERROR: $1 >&2
+  echo "$0 ERROR: $1" >&2
   exit 2
 }
 
@@ -30,7 +30,7 @@ ERROR() {
 # -- reverse the order
 # -- if the address does not match these criteria the variable 'reverse will be empty'
 
-reverse=$(echo $1 |
+reverse=$(echo "$1" |
   sed -ne "s~^\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\)$~\4.\3.\2.\1~p")
 
 if [ "x${reverse}" = "x" ] ; then
@@ -51,9 +51,6 @@ fi
 #   [ "x" = "x" ]
 # This evaluates to true, so the script will call the ERROR function and quit
 
-# -- do a reverse ( address -> name) DNS lookup
-REVERSE_DNS=$(dig +short -x $1)
-
 # -- count of times we're listed
 NUMLISTS=0
 
@@ -61,13 +58,13 @@ NUMLISTS=0
 for BL in ${BLISTS} ; do
 
     # use dig to lookup the name in the blacklist
-    LISTED="$(dig +short -t a ${reverse}.${BL}.)"
+    LISTED=$(dig +short -t a "${reverse}.${BL}".)
 
     if [[ -n "${LISTED}" ]] ; then
         # show the reversed IP and append the name of the blacklist
         printf "%-40s" " ${reverse}.${BL}."
-        echo ${LISTED}
-        NUMLISTS=$(( $NUMLISTS + 1 ))
+        echo "${LISTED}"
+        NUMLISTS=$(( NUMLISTS + 1 ))
     fi
 done
 
