@@ -5,8 +5,8 @@
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 REPO="$1"
 TXN="$2"
-tmpkey=`mktemp` || exit 1
-tmpcert=`mktemp` || exit 1
+tmpkey=$(mktemp) || exit 1
+tmpcert=$(mktemp) || exit 1
 export HOME=/
 SVNLOOK=/usr/bin/svnlook
 FAILCOUNT=0
@@ -33,12 +33,12 @@ if [ -n "$CHANGES" ] ; then
 
         if [ $? -ne 0 ] ; then
             echo "$keyfile and $certfile don't match up" >&2
-            FAILCOUNT=$(( $FAILCOUNT + 1 ))
+            FAILCOUNT=$(( FAILCOUNT + 1 ))
         fi
     done < <( echo "$CHANGES" )
 fi
 
-rm ${tmpkey}
-rm ${tmpcert}
+rm "${tmpkey}"
+rm "${tmpcert}"
 
 exit ${FAILCOUNT}
