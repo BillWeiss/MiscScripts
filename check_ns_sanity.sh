@@ -18,7 +18,7 @@ fi
 hosttocheck="$1"
 
 # Get the list of nameservers for the domain
-nslist=$( ${DIG} ${hosttocheck} ns +short )
+nslist=$( ${DIG} "${hosttocheck}" ns +short )
 if [[ -z "${nslist}" ]] ; then
     echo "CRITICAL: No NS records found for ${hosttocheck}"
     exit 2
@@ -28,7 +28,7 @@ errorcount=0
 errormessage=""
 
 for nameserver in ${nslist} ; do
-    lookup=$( ${DIG} @${nameserver} ${hosttocheck} ${checktype} +short )
+    lookup=$( ${DIG} "@${nameserver}" "${hosttocheck}" "${checktype}" +short )
     if [[ -z "${lookup}" ]] ; then
         $errorcount++
         errormessage="${errormessage}${nameserver} had no records for ${hosttocheck}\n"
